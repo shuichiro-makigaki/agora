@@ -1,0 +1,7 @@
+md5: 6ba2f91161c2ef19d5f149a2ad5a6765
+outs:
+- md5: bb63d22da9cd690e93035a392d9dd4a7.dir
+  path: delta_new_hits_thresh1_xdug30_xdg30_xdgf30
+  cache: true
+  metric: false
+  persist: false

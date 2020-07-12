@@ -1,0 +1,7 @@
+md5: 103648c8fcaa8be72cd2c555c4b543f7
+outs:
+- md5: 1c750d65e5a8c7e4045d9dea0de41fbc
+  path: delta_new_hits_word2_thresh1_xdug20_xdg20_xdgf20.csv
+  cache: true
+  metric: false
+  persist: false

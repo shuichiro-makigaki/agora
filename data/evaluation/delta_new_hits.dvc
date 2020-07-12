@@ -1,0 +1,7 @@
+md5: 26946bda5c98b0b8b9e6c81c64f017f1
+outs:
+- md5: aad157073a3da20f1c925bf38223986e.dir
+  path: delta_new_hits
+  cache: true
+  metric: false
+  persist: false

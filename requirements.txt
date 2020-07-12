@@ -1,0 +1,16 @@
+dvc[s3,ssh]
+biopython
+tqdm
+networkx
+neo4j
+docker
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+jupyterlab
+notebook
+nbdime
+click
+nbresuse

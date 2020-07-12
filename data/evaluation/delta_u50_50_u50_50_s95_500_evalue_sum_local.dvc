@@ -1,0 +1,7 @@
+md5: 22d800a790b6fe1ad0a6ca247b62545b
+outs:
+- md5: f42d84636864e77e5e90e8eaa8d3ad61.dir
+  path: delta_u50_50_u50_50_s95_500_evalue_sum_local
+  cache: true
+  metric: false
+  persist: false

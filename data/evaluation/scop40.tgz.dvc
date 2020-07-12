@@ -1,0 +1,7 @@
+md5: 706a7a4d62de6fe003fc6d91d4fc262e
+outs:
+- md5: 5211cd97c262450dc03bb242149d27d4
+  path: scop40.tgz
+  cache: true
+  metric: false
+  persist: false

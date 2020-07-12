@@ -1,0 +1,7 @@
+md5: 3be696b75e2fe11ae46d1fc8b0589483
+outs:
+- md5: eff067783e6dd7e855077aa2d5ca2cdb
+  path: hh_scop40.fasta
+  cache: true
+  metric: false
+  persist: false

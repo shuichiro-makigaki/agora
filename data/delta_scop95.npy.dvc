@@ -1,0 +1,7 @@
+md5: e169512088672cc5604f103e75d33441
+outs:
+- md5: ef24900a0438ce2d3dce8fc9f149ccb4
+  path: delta_scop95.npy
+  cache: true
+  metric: false
+  persist: false

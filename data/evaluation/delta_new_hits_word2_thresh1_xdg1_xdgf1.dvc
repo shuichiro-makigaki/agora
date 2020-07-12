@@ -1,0 +1,7 @@
+md5: 3f57cbc03d256de430c24ef799c8ce9e
+outs:
+- md5: 13636b0ec83bba44a6bda90448dc6b39.dir
+  path: delta_new_hits_word2_thresh1_xdg1_xdgf1
+  cache: true
+  metric: false
+  persist: false

@@ -1,0 +1,7 @@
+md5: 689965fe926e0c2d600928c517dfbf4b
+outs:
+- md5: 01800eb1fe72457b9c2ab5060be3fb7b
+  path: hh_scop40.graphml
+  cache: true
+  metric: false
+  persist: false

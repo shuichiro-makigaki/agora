@@ -1,0 +1,7 @@
+md5: 961cdf38957fa4a50951cfe20b339ffc
+outs:
+- md5: f4219d33be0fa2092fba3d9b67d4c531
+  path: new_hits.csv
+  cache: true
+  metric: false
+  persist: false

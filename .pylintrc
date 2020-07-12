@@ -1,0 +1,21 @@
+[MESSAGES CONTROL]
+
+disable=missing-function-docstring,
+        missing-class-docstring,
+        missing-module-docstring,
+        wrong-import-position,
+        no-self-use,
+        logging-format-interpolation,
+        too-few-public-methods,
+        import-outside-toplevel,
+        too-many-locals,
+        too-many-arguments,
+        bare-except,
+        invalid-name,
+        too-many-branches,
+        too-many-statements,
+        broad-except
+
+[FORMAT]
+
+max-line-length=120

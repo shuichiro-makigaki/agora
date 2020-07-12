@@ -1,0 +1,8 @@
+['remote "s3"']
+url = s3://agora-data/dvc-cache
+[core]
+remote = origin
+['remote "origin"']
+url = ssh://makigaki@gw1.cb.cs.titech.ac.jp/home/makigaki/public_html/agora/dvc-cache
+['remote "default"']
+url = http://www.cb.cs.titech.ac.jp/~makigaki/agora/dvc-cache

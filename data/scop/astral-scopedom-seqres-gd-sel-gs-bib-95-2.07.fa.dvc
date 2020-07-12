@@ -1,0 +1,7 @@
+md5: 4d09678a0f7c1ec77338a1fc47ff0b40
+outs:
+- md5: 40c80ee7fd7451ccaf5fb7bfcea8eb38
+  path: astral-scopedom-seqres-gd-sel-gs-bib-95-2.07.fa
+  cache: true
+  metric: false
+  persist: false

@@ -1,0 +1,7 @@
+md5: 1f3629194e037dfd756876c74555938e
+outs:
+- md5: e413e5646fea39235184aadc7d2a089d
+  path: astral-scopedom-seqres-gd-all-2.07-stable.fa
+  cache: true
+  metric: false
+  persist: false
