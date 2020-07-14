@@ -79,3 +79,11 @@ $ ls target1
 target1/target1.fasta
 $ python3 agora_cli.py iss --in-fasta target1/target.fasta --out-dir target1
 ```
+
+## Data availability
+
+Data for evaluation can be downloaded by [DVC](https://dvc.org/):
+
+```
+$ dvc get . data/evaluation/targets
+```
