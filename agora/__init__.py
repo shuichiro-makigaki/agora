@@ -834,5 +834,5 @@ class AgoraResultSet:
 
     def from_numpy_file(self, filename: Path):
         resultset = np.load(filename, allow_pickle=True)
-        for r in resultset[:10]:
+        for r in resultset[:100]:
             self.items.append(AgoraResult(r[6], r[7][0]))
