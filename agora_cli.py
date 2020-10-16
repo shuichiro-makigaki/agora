@@ -82,13 +82,12 @@ def cmd_show_results(in_fasta, out_dir, last_db):
             print(format(r.alignment, 'clustal'))
 
 
-# @main.command()
-# @click.argument('in_fasta', type=click.Path(exists=True))
-# @click.argument('graphml_dir', type=click.Path(exists=True))
-# @click.argument('atom_files_dir', type=click.Path(exists=True))
-# @click.option('--overwrite', is_flag=True)
-# @click.option('--num-align', type=click.INT, default=100)
-def modeller_automodel(in_fasta, graphml_dir, atom_files_dir, overwrite, num_align):
+@main.command()
+@click.argument('in_fasta', type=click.Path(exists=True))
+@click.argument('graphml_dir', type=click.Path(exists=True))
+@click.argument('atom_files_dir', type=click.Path(exists=True))
+@click.option('--num-align', type=click.INT, default=100)
+def modeller_automodel(in_fasta, graphml_dir, atom_files_dir, num_align):
     domains = list(SeqIO.parse(in_fasta, 'fasta'))
     random.shuffle(domains)
     for q in tqdm(domains):

@@ -342,9 +342,17 @@ class AgoraSearch:
             seen.append(p[6])
             results.append(p)
         for r in results[:num_align+1]:
-            n1_seq = query if r[2] == query.id else self._get_seq('uniref50', r[2])
-            n2_seq = query if r[4] == query.id else self._get_seq('uniref50', r[4])
-            n3_seq = query if r[6] == query.id else self._get_seq(last_db, r[6])
+            # Query
+            # intermediate 1: n1
+            # intermediate 2: n2
+            # Hit           : n3
+            try:
+                n1_seq = query if r[2] == query.id else self._get_seq('uniref50', r[2])
+                n2_seq = query if r[4] == query.id else self._get_seq('uniref50', r[4])
+                n3_seq = query if r[6] == query.id else self._get_seq(last_db, r[6])
+            except Exception as e:
+                print(e)
+                return results
             # Smith-Waterman
             aln_local = self._local_align(query, n3_seq, -11)
             r[7] = (aln_local.format('clustal'), 'local', aln_local.annotations, None, None)
@@ -372,17 +380,37 @@ class AgoraSearch:
             i_n2_seq, i_n3_seq = self._extend_region(i_n2_seq, n3_seq, hsp3, 20)
             aln3 = self._local_align(i_n2_seq, i_n3_seq, -11)
             r[5] = (aln3.format('clustal'), aln3.annotations)
-            # Merge
+            ### Merge
+            # Q->n1->n2->n3 tag=ilocal
             aln1 = AlignIO.read(StringIO(r[1][0]), 'clustal')
             aln2 = AlignIO.read(StringIO(r[3][0]), 'clustal')
             aln3 = AlignIO.read(StringIO(r[5][0]), 'clustal')
             out, _ = self._mafft_merge2([aln1[0], aln1[1], aln2[0], aln2[1], aln3[0], aln3[1]])
             aln_ilocal = AlignIO.read(StringIO(out), 'clustal')
-            # Select
-            if self._aligned_number(aln_local) >= self._aligned_number(aln_ilocal):
-                r[7] = (aln_local.format('clustal'), 'local', aln_local.annotations, aln_ilocal.format('clustal'), None)
+            # Q->n3: aln_local tag=local
+            # Q->n1->n3 aln1+aln4 tag=ilocal1
+            aln4 = self._local_align(i_n1_seq, i_n3_seq, -11)
+            out, _ = self._mafft_merge1([aln1[0], aln1[1], aln4[0], aln4[1]])
+            aln_ilocal1 = AlignIO.read(StringIO(out), 'clustal')
+            # Q->n2->n3 aln5+aln3 tag=ilocal2
+            aln5 = self._local_align(i_query, i_n2_seq, -11)
+            out, _ = self._mafft_merge1([aln5[0], aln5[1], aln3[0], aln3[1]])
+            aln_ilocal2 = AlignIO.read(StringIO(out), 'clustal')
+            # ToDo: Select from aln_ilocal, aln_local, aln_ilocal1, aln_ilocal2
+            best = sorted([
+                {'key': 'local', 'value': self._aligned_number(aln_local)},
+                {'key': 'ilocal', 'value': self._aligned_number(aln_ilocal)},
+                {'key': 'ilocal1', 'value': self._aligned_number(aln_ilocal1)},
+                {'key': 'ilocal2', 'value': self._aligned_number(aln_ilocal2)}
+            ], key=lambda _: _['value'], reverse=True)[0]
+            if best['key'] == 'local':
+                r[7] = (aln_local.format('clustal'), 'local', aln_local.annotations, aln_ilocal.format('clustal'), aln_ilocal1.format('clustal'), aln_ilocal2.format('clustal'))
+            elif best['key'] == 'ilocal1':
+                r[7] = (aln_ilocal1.format('clustal'), 'ilocal1', None, aln_local.format('clustal'), aln_local.annotations, aln_ilocal.format('clustal'), aln_ilocal2.format('clustal'))
+            elif best['key'] == 'ilocal2':
+                r[7] = (aln_ilocal2.format('clustal'), 'ilocal2', None, aln_local.format('clustal'), aln_local.annotations, aln_ilocal.format('clustal'), aln_ilocal1.format('clustal'))
             else:
-                r[7] = (aln_ilocal.format('clustal'), 'ilocal', None, aln_local.format('clustal'), aln_local.annotations)
+                r[7] = (aln_ilocal.format('clustal'), 'ilocal', None, aln_local.format('clustal'), aln_local.annotations, aln_ilocal1.format('clustal'), aln_ilocal2.format('clustal'))
 
         return results
 
@@ -767,9 +795,9 @@ class AgoraModeling:
         return record
 
     def modeller_automodel(self, query: SeqRecord, results: Path, num_align: int, atom_files_dir: Path):
-        from modeller import environ
+        from modeller import environ, log
         from modeller.automodel import automodel
-        for model_index, r in enumerate(np.load(results, allow_pickle=True)[:num_align]):
+        for model_index, r in enumerate(np.load(results, allow_pickle=True)[:num_align+1]):
             try:
                 aln = AlignIO.read(StringIO(r[-2][0]), 'clustal')
             except:
@@ -795,6 +823,7 @@ class AgoraModeling:
                 try:
                     os.chdir(tmpdir)
                     AlignIO.write(aln, 'aln.pir', 'pir')
+                    log.none()
                     env = environ()
                     env.io.atom_files_directory = [(atom_files_dir/aln[1].id[2:4]).resolve().as_posix()]
                     mod = automodel(env, 'aln.pir', knowns=[aln[1].id], sequence=aln[0].id)
