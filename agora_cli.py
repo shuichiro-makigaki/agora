@@ -40,7 +40,7 @@ def main():
 def iss(in_fasta, out_dir, overwrite, num_threads, last_label, last_db, num_align, last_max_hits):
     cmd_iss(in_fasta, out_dir, overwrite, num_threads, last_label, last_db, last_max_hits)
     cmd_search(in_fasta, out_dir, overwrite, num_align, last_label, last_db)
-    cmd_show_results(in_fasta, out_dir, last_db)
+    #cmd_show_results(in_fasta, out_dir, last_db)
 
 
 def cmd_iss(in_fasta, out_dir, overwrite, num_threads, last_label, last_db, last_max_hits):
