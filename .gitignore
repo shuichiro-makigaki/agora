@@ -105,5 +105,3 @@ venv.bak/
 
 .virtual_documents/
 .vscode/
-data/
-!*.dvc
